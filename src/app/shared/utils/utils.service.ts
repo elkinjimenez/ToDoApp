@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../components/snack-bar/snack-bar.component';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilsService {
+
+  @BlockUI() public blockUI!: NgBlockUI;
 
   constructor(private _snackBar: MatSnackBar) { }
 
@@ -19,6 +22,5 @@ export class UtilsService {
   }
 
 }
-
 
 export declare type TypesSnackBar = 'INFO' | 'SUCCESSS' | 'WARN';
