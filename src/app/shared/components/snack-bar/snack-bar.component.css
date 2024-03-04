@@ -1,0 +1,7 @@
+:host {
+  display: flex;
+}
+
+.btn-close {
+  color: white;
+}
