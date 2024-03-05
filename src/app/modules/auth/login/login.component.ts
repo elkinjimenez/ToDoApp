@@ -51,7 +51,6 @@ export class LoginComponent {
   }
 
   public consultUserClaroCo() {
-    this.formAuth.disable();
     const body = {
       user: this.formAuth.controls.user.value,
       password: this.formAuth.controls.password.value,
@@ -65,7 +64,6 @@ export class LoginComponent {
           this.$router.navigate(['/panel']);
         } else {
           alert(resp?.description ? resp.description : 'Falla al autenticarse, por favor intente de nuevo.');
-          this.formAuth.enable();
         }
       }
     )

@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build --prod": "ng build --output-hashing=all --base-href=/admin-otp-cvc-listas/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
