@@ -1,0 +1,57 @@
+<ion-content class="ion-padding" mode="md">
+  <ion-toolbar>
+    <ion-buttons slot="end" id="popover-button">
+      <ion-icon size="large" name="ellipsis-vertical"></ion-icon>
+    </ion-buttons>
+    <ion-popover trigger="popover-button" [dismissOnSelect]="true">
+      <ng-template>
+        <ion-content class="ion-padding">
+          <ion-list lines="none">
+            <ion-item (click)="checkAll()">
+              <ion-icon color="primary" slot="start" name="radio-button-on-outline"></ion-icon>
+              <ion-label>
+                <span *ngIf="isChecked">Sin terminar todas</span>
+                <span *ngIf="!isChecked">Completar todas</span>
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="isTrashed = !isTrashed">
+              <ion-icon color="danger" slot="start" name="trash"></ion-icon>
+              <ion-label>
+                <span *ngIf="isTrashed">Terminar eliminar tareas</span>
+                <span *ngIf="!isTrashed">Eliminar tareas</span>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-popover>
+  </ion-toolbar>
+  <h1 class="ion-padding">Hoy es <br> <strong>{{today | date}}</strong></h1>
+  <ion-list [inset]="false" lines="none" mode="ios">
+    @for (t of tasks; track $index) {
+    <ion-item>
+      <ion-checkbox [(ngModel)]="t.done" slot="start"></ion-checkbox>
+      <ion-input [disabled]="t.done" [(ngModel)]="t.title"></ion-input>
+      @if (isTrashed) {
+      <ion-icon slot="end" color="danger" (click)="trash(t.id)" name="trash"></ion-icon>
+      }
+    </ion-item>
+    }
+  </ion-list>
+  <ion-modal trigger="open-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5, 0.75]" handleBehavior="cycle">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <div class="ion-padding">
+          <h1>Crear tarea</h1>
+          <ion-input [(ngModel)]="newTask" (click)="modal.setCurrentBreakpoint(0.75)" label="Tarea"
+            label-placement="floating" fill="outline" placeholder="Escribe aquí..."></ion-input>
+          <div class="button-container">
+            <ion-fab-button type="submit" (click)="addTask()">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-fab-button>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
