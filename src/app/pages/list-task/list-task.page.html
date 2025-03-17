@@ -37,6 +37,13 @@
       }
     </ion-item>
     }
+    @if (tasks.length == 0) {
+    <ion-item>
+      <ion-label class="ion-text-center" color="primary">
+        <h1><strong>¡No hay tareas!</strong></h1>
+      </ion-label>
+    </ion-item>
+    }
   </ion-list>
   <ion-modal trigger="open-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5, 0.75]" handleBehavior="cycle">
     <ng-template>

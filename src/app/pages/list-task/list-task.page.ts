@@ -1,16 +1,20 @@
+import { Task } from './../../models/task';
 import { addIcons } from 'ionicons';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonList, IonItem, IonCheckbox, IonInput, IonModal, IonFabButton, IonIcon, IonToolbar, IonButtons, IonPopover, IonLabel } from '@ionic/angular/standalone';
 import { saveOutline, chevronForwardOutline, trash, chevronForwardCircle, document, colorPalette, globe, addOutline, menu, ellipsisVertical, chevronDownCircle, radioButtonOnOutline } from 'ionicons/icons';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-list-task',
   templateUrl: './list-task.page.html',
   styleUrls: ['./list-task.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonPopover,
+  imports: [
+    IonLabel,
+    IonPopover,
     IonButtons,
     IonToolbar,
     IonIcon, IonFabButton, IonModal, IonInput,
@@ -31,26 +35,26 @@ export class ListTaskPage implements OnInit {
 
   today = new Date();
 
-  tasks: Task[] = []
+  tasks: Task[] = [];
 
   constructor(
+    private storage: Storage,
   ) {
     addIcons({ ellipsisVertical, radioButtonOnOutline, trash, chevronForwardOutline, chevronDownCircle, document, colorPalette, globe, menu, addOutline, chevronForwardCircle, saveOutline });
   }
 
   ngOnInit() {
-    this.testTasks();
+    this.initStorage();
   }
 
-  testTasks() {
-    this.tasks = [
-      { id: 1, title: 'This is a first task', done: false },
-      { id: 2, title: 'This is a second task', done: true },
-      { id: 3, title: 'This is a third task', done: false },
-      { id: 4, title: 'This is a fourth task', done: false },
-      { id: 5, title: 'This is a fifth task', done: false },
-      { id: 6, title: 'This is a sixth task', done: false },
-    ];
+  private async initStorage() {
+    await this.storage.create();
+    this.loadStorage();
+  }
+
+  private async loadStorage() {
+    const tasks = await this.storage.get('tasks');
+    this.tasks = tasks || [];
   }
 
   trash(id: number) {
@@ -58,10 +62,11 @@ export class ListTaskPage implements OnInit {
     this.tasks = this.tasks.filter(task => task.id !== id);
   }
 
-  addTask() {
+  async addTask() {
     this.tasks.push({ id: this.tasks.length + 1, title: this.newTask, done: false });
     this.newTask = '';
     this.modal.dismiss();
+    await this.storage.set('tasks', this.tasks);
   }
 
   checkAll() {
@@ -73,10 +78,4 @@ export class ListTaskPage implements OnInit {
     });
   }
 
-}
-
-interface Task {
-  id: number;
-  title: string;
-  done: boolean;
 }
