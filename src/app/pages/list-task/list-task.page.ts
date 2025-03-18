@@ -4,8 +4,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonList, IonItem, IonCheckbox, IonInput, IonModal, IonFabButton, IonIcon, IonToolbar, IonButtons, IonPopover, IonLabel } from '@ionic/angular/standalone';
-import { saveOutline, chevronForwardOutline, trash, chevronForwardCircle, document, colorPalette, globe, addOutline, menu, ellipsisVertical, chevronDownCircle, radioButtonOnOutline } from 'ionicons/icons';
+import { saveOutline, chevronForwardOutline, trash, chevronForwardCircle, document, colorPalette, globe, addOutline, menu, ellipsisVertical, chevronDownCircle, radioButtonOnOutline, leafOutline } from 'ionicons/icons';
 import { Storage } from '@ionic/storage-angular';
+import { UtilService } from 'src/app/utils/util.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-task',
@@ -39,8 +41,10 @@ export class ListTaskPage implements OnInit {
 
   constructor(
     private storage: Storage,
+    private util: UtilService,
+    private router: Router,
   ) {
-    addIcons({ ellipsisVertical, radioButtonOnOutline, trash, chevronForwardOutline, chevronDownCircle, document, colorPalette, globe, menu, addOutline, chevronForwardCircle, saveOutline });
+    addIcons({ellipsisVertical,radioButtonOnOutline,trash,leafOutline,chevronForwardOutline,chevronDownCircle,document,colorPalette,globe,menu,addOutline,chevronForwardCircle,saveOutline});
   }
 
   ngOnInit() {
@@ -67,6 +71,8 @@ export class ListTaskPage implements OnInit {
     this.newTask = '';
     this.modal.dismiss();
     await this.storage.set('tasks', this.tasks);
+    this.util.presentToast('Tarea creada.');
+    this.router.navigate(['/home']);
   }
 
   checkAll() {

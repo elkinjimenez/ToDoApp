@@ -3,11 +3,15 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/list-task/list-task.page').then(m => m.ListTaskPage),
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
+    path: 'home',
+    loadComponent: () => import('./pages/list-task/list-task.page').then(m => m.ListTaskPage),
+  },
+  {
     path: 'profile',
-    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+    loadComponent: () => import('./pages/profile/profile.page').then(m => m.ProfilePage)
   }
 ];

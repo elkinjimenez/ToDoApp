@@ -1,13 +1,25 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" mode="ios">
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-title>
+      <span *ngIf="profile.name">{{profile.name}}</span>
+      <span *ngIf="!profile.name">Guardar su usuario</span>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="ion-text-center">
+    <ion-icon class="ion-padding-top" name="happy-outline"></ion-icon>
+    <ion-grid>
+      <ion-row mode="md" class="ion-justify-content-center">
+        <ion-col size-lg="4" size-md="6" size="12" class="ion-padding">
+          <ion-input class="ion-margin-top" label="Usuario" [(ngModel)]="profile.name" label-placement="floating"
+            fill="outline" placeholder="Ingrese su nombre"></ion-input>
+          <ion-input class="ion-margin-top" label="Email" type="email" [(ngModel)]="profile.email"
+            label-placement="floating" fill="outline" placeholder="Ingrese su email"></ion-input>
+          <ion-button (click)="saveProfile()" class="ion-margin-top" size="large" mode="ios" expand="block">Guardar cambios</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
